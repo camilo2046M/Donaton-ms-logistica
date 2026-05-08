@@ -8,11 +8,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class EnvioFactory {
 
-    // Patrón Factory Method: Centraliza y encapsula la lógica de creación
+
     public Envio crearEnvio(EnvioRequestDTO request) {
 
-        // Aquí podríamos tener lógica compleja (ej. calcular costos, validar rutas)
-        // antes de crear la instancia, lo cual justifica el uso del patrón.
+
 
         return Envio.builder()
                 .centroAcopioOrigen(request.getCentroAcopioOrigen())
