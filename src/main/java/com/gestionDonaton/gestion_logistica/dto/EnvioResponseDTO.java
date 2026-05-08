@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 public class EnvioResponseDTO {
     private Long id;
     private String centroAcopioOrigen;
+    private Long donacionId;
     private String destino;
     private String tipoTransporte;
     private String estado;

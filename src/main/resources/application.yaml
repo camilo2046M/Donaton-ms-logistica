@@ -6,7 +6,7 @@ spring:
 
     url: jdbc:postgresql://localhost:5432/bd_logistica
     username: postgres
-    password: TU_CONTRASEÑA_AQUÍ
+    password: 12345
     driver-class-name: org.postgresql.Driver
 
   jpa:
