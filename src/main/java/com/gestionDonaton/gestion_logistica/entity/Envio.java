@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 import java.time.LocalDateTime;
 
 @Data
@@ -19,6 +20,10 @@ public class Envio {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+
+    @Column(name = "donacion_id")
+    private Long donacionId;
+
     @Column(name = "centro_acopio_origen", nullable = false)
     private String centroAcopioOrigen;
 
@@ -26,10 +31,10 @@ public class Envio {
     private String destino;
 
     @Column(name = "tipo_transporte", nullable = false)
-    private String tipoTransporte; // TERRESTRE, AEREO, MARITIMO
+    private String tipoTransporte;
 
     @Column(nullable = false)
-    private String estado; // EN_PREPARACION, EN_RUTA, ENTREGADO
+    private String estado;
 
     @Column(name = "fecha_creacion", updatable = false)
     private LocalDateTime fechaCreacion;
