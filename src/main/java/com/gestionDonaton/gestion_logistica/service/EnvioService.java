@@ -72,19 +72,25 @@ public class EnvioService {
                 .build();
     }
 
-    public List<EnvioResponseDTO> listarEnvios() {
-        return envioRepository.findAll().stream()
-                .map(this::mapToResponseDTO)
-                .collect(Collectors.toList());
-    }
-
     public EnvioResponseDTO actualizarEstado(Long id, String nuevoEstado) {
-
         Envio envio = envioRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Envío no encontrado con ID: " + id));
+                .orElseThrow(() -> new RuntimeException("Envío no encontrado"));
+
         envio.setEstado(nuevoEstado.toUpperCase());
+
+        if ("ENTREGADO".equalsIgnoreCase(nuevoEstado)) {
+            try {
+                donacionClient.completarDonacion(envio.getDonacionId());
+                System.out.println("Comunicación exitosa: Donación sincronizada.");
+            } catch (Exception e) {
+                System.err.println("No se pudo avisar a Donaciones, pero el envío se marcó como entregado.");
+            }
+        }
+
         return mapToResponseDTO(envioRepository.save(envio));
     }
+
+
 
     private EnvioResponseDTO mapToResponseDTO(Envio envio) {
         return EnvioResponseDTO.builder()
