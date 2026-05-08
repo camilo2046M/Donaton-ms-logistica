@@ -27,6 +27,12 @@ public class EnvioService {
         return mapToResponseDTO(envioRepository.save(nuevoEnvio));
     }
 
+    public List<EnvioResponseDTO> listarEnvios() {
+
+        return envioRepository.findAll().stream()
+                .map(this::mapToResponseDTO)
+                .collect(Collectors.toList());
+    }
     
     public List<EnvioResponseDTO> procesarDonacionesAutomaticas(String palabraClave) {
         // 1. Buscamos donaciones en el microservicio externo
