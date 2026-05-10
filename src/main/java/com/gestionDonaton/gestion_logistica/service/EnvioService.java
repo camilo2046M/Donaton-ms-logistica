@@ -21,38 +21,34 @@ public class EnvioService {
     private final EnvioFactory envioFactory;
     private final DonacionClient donacionClient;
 
-    
     public EnvioResponseDTO planificarEnvio(EnvioRequestDTO request) {
         Envio nuevoEnvio = envioFactory.crearEnvio(request);
         return mapToResponseDTO(envioRepository.save(nuevoEnvio));
     }
 
     public List<EnvioResponseDTO> listarEnvios() {
-
         return envioRepository.findAll().stream()
                 .map(this::mapToResponseDTO)
                 .collect(Collectors.toList());
     }
-    
+
     public List<EnvioResponseDTO> procesarDonacionesAutomaticas(String palabraClave) {
-        // 1. Buscamos donaciones en el microservicio externo
+        // 1. Buscamos donaciones en el microservicio externo (Donaciones 8081)
         return donacionClient.buscarPorPalabra(palabraClave).stream()
                 .map(donacion -> {
-                   
+                    // 2. Determinamos logística (Inteligencia de negocio)
                     EnvioRequestDTO request = autoDeterminarLogistica(donacion);
-
-                    
+                    // 3. Creamos el envío en nuestra DB
                     Envio envio = envioFactory.crearEnvio(request);
-
                     return mapToResponseDTO(envioRepository.save(envio));
                 })
                 .collect(Collectors.toList());
     }
 
     private EnvioRequestDTO autoDeterminarLogistica(DonacionDTO donacion) {
-        String objeto = donacion.getNombreObjeto().toLowerCase();
+        // Validación de seguridad para evitar NullPointerException
+        String objeto = (donacion.getNombreObjeto() != null) ? donacion.getNombreObjeto().toLowerCase() : "";
 
-       
         var requestBuilder = EnvioRequestDTO.builder()
                 .donacionId(donacion.getId());
 
@@ -70,7 +66,6 @@ public class EnvioService {
                     .build();
         }
 
-        
         return requestBuilder
                 .centroAcopioOrigen("Bodega General")
                 .destino("Punto de Acopio Estándar")
@@ -84,19 +79,18 @@ public class EnvioService {
 
         envio.setEstado(nuevoEstado.toUpperCase());
 
+
         if ("ENTREGADO".equalsIgnoreCase(nuevoEstado)) {
             try {
                 donacionClient.completarDonacion(envio.getDonacionId());
-                System.out.println("Comunicación exitosa: Donación sincronizada.");
+                System.out.println("Sincronización exitosa con Microservicio Donaciones.");
             } catch (Exception e) {
-                System.err.println("No se pudo avisar a Donaciones, pero el envío se marcó como entregado.");
+                System.err.println("Error de red con Donaciones: " + e.getMessage());
             }
         }
 
         return mapToResponseDTO(envioRepository.save(envio));
     }
-
-
 
     private EnvioResponseDTO mapToResponseDTO(Envio envio) {
         return EnvioResponseDTO.builder()
