@@ -21,7 +21,7 @@ public class Envio {
     private Long id;
 
 
-    @Column(name = "donacion_id")
+    @Column(name = "donacion_id", nullable = false)
     private Long donacionId;
 
     @Column(name = "centro_acopio_origen", nullable = false)
