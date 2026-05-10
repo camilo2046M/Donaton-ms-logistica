@@ -14,11 +14,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/envios")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*")
 public class EnvioController {
 
     private final EnvioService envioService;
     private final DonacionClient donacionClient;
-
 
     @PostMapping
     public ResponseEntity<EnvioResponseDTO> planificarEnvio(@RequestBody EnvioRequestDTO request) {
@@ -33,19 +33,16 @@ public class EnvioController {
         return ResponseEntity.ok(envioService.actualizarEstado(id, nuevoEstado));
     }
 
-
     @PostMapping("/procesar/{palabra}")
     public ResponseEntity<List<EnvioResponseDTO>> procesarAutomatico(@PathVariable String palabra) {
         List<EnvioResponseDTO> respuestas = envioService.procesarDonacionesAutomaticas(palabra);
         return ResponseEntity.ok(respuestas);
     }
 
-
     @GetMapping
     public ResponseEntity<List<EnvioResponseDTO>> listarEnvios() {
         return ResponseEntity.ok(envioService.listarEnvios());
     }
-
 
     @GetMapping("/test-conexion/{palabra}")
     public ResponseEntity<?> probarConexion(@PathVariable String palabra) {

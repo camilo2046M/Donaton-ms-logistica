@@ -18,6 +18,10 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
 
+donaton:
+  ms:
+    donaciones:
+      url: http://localhost:8081/api/donaciones
   cloud:
     compatibility-verifier:
       enabled: false
