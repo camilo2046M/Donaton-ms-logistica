@@ -10,4 +10,5 @@ import java.util.List;
 @Repository
 public interface EnvioRepository extends JpaRepository<Envio, Long> {
     List<Envio> findByEstado(String estado);
+    boolean existsByDonacionId(Long donacionId);
 }
