@@ -1,24 +1,25 @@
 package com.gestionDonaton.gestion_logistica.controller;
 
-
 import com.gestionDonaton.gestion_logistica.dto.DonacionDTO;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.ArrayList; // Para el ejemplo de lista vacía
 
 @RestController
-@RequestMapping("/api/donaciones") // Debe coincidir con la URL del FeignClient
+@RequestMapping("/api/donaciones")
 public class DonacionController {
 
-    // Debe coincidir con /buscar/{palabra}
     @GetMapping("/buscar/{palabra}")
-    public List<DonacionDTO> buscarPorPalabra(@PathVariable String palabra) {
-        // Tu lógica de búsqueda
+    public ResponseEntity<List<DonacionDTO>> buscarPorPalabra(@PathVariable String palabra) {
+        List<DonacionDTO> listaSimulada = new ArrayList<>();
+        return ResponseEntity.ok(listaSimulada);
     }
 
-    // Debe coincidir con /{id}/completar
     @PatchMapping("/{id}/completar")
-    public void completarDonacion(@PathVariable Long id) {
-        // Tu lógica para marcar como completada
+    public ResponseEntity<Void> completarDonacion(@PathVariable Long id) {
+        // Lógica para completar
+        return ResponseEntity.noContent().build();
     }
 }
