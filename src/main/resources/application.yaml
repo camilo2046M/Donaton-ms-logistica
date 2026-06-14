@@ -1,9 +1,11 @@
+server:
+  port: 8082
+
 spring:
   application:
     name: donaton-ms-logistica
 
   datasource:
-
     url: jdbc:postgresql://localhost:5432/bd_logistica
     username: postgres
     password: 12345
@@ -11,20 +13,14 @@ spring:
 
   jpa:
     hibernate:
-
       ddl-auto: update
     show-sql: true
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  cloud:
+    compatibility-verifier:
+      enabled: false
 
 donaton:
   ms:
     donaciones:
       url: http://localhost:8081/api/donaciones
-  cloud:
-    compatibility-verifier:
-      enabled: false
-
-server:
-  port: 8082
