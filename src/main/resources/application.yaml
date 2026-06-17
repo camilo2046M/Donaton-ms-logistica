@@ -1,17 +1,26 @@
+server:
+  port: 8082
+
 spring:
   application:
     name: donaton-ms-logistica
+
   datasource:
-    url: jdbc:h2:mem:logisticadb
-    username: sa
-    password:
-    driver-class-name: org.h2.Driver
+    url: jdbc:postgresql://localhost:5432/bd_logistica
+    username: postgres
+    password: 12345
+    driver-class-name: org.postgresql.Driver
+
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
       ddl-auto: update
     show-sql: true
-    defer-datasource-initialization: true
 
-server:
-  port: 8082
+  cloud:
+    compatibility-verifier:
+      enabled: false
+
+donaton:
+  ms:
+    donaciones:
+      url: http://localhost:8081/api/donaciones
