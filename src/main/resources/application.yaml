@@ -8,7 +8,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/bd_logistica
     username: postgres
-    password: 12345
+    password: hola1234
     driver-class-name: org.postgresql.Driver
 
   jpa:
@@ -24,3 +24,7 @@ donaton:
   ms:
     donaciones:
       url: http://localhost:8081/api/donaciones
+logging:
+  level:
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE

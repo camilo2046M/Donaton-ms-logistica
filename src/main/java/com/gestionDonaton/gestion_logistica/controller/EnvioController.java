@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/envios")
+@RequestMapping("/api/v1/envios")
 @RequiredArgsConstructor
 @CrossOrigin(origins = "*")
 @Tag(name = "Gestión de Envíos", description = "Endpoints para la planificación, seguimiento y procesamiento automático de envíos de donaciones")
