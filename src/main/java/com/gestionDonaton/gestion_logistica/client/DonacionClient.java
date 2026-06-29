@@ -11,7 +11,7 @@ import java.util.List;
 @FeignClient(name = "ms-donaciones", url = "${donaton.ms.donaciones.url}")
 public interface DonacionClient {
 
-    @GetMapping("/buscar/{palabra}")
+    @GetMapping("/api/v1/donaciones/buscar/{palabra}")
     List<DonacionDTO> buscarPorPalabra(@PathVariable("palabra") String palabra);
 
     @PatchMapping("/{id}/completar")
